@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'//上传到bintray
 
 android {
@@ -24,6 +25,17 @@ android {
     lintOptions {//增加
         abortOnError false
     }
+
+    allprojects {
+        tasks.withType(JavaCompile) {    //设置全局编码
+            options.encoding = "UTF-8"
+        }
+
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+            options.addStringOption('encoding', 'UTF-8')
+        }
+    }
 }
 
 dependencies {
@@ -39,7 +51,7 @@ publish {//增加
     userOrg = 'zhoulc668'//bintray.com用户名
     groupId = 'com.lcworklib'//jcenter上的路径
     artifactId = 'lcworklib'//项目名称
-    publishVersion = '1.0.1'//版本号
+    publishVersion = '1.0.3'//版本号
     desc = 'Oh hi, this is a nice description for a project, right?'//描述，不重要
     website = 'https://github.com/zhou411424/lcworklib'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
